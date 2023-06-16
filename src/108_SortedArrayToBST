@@ -1,0 +1,36 @@
+
+class TreeNode {
+    val: number
+    left: TreeNode | null
+    right: TreeNode | null
+    constructor(val?: number, left?: TreeNode | null, right?: TreeNode | null) {
+        this.val = (val === undefined ? 0 : val)
+        this.left = (left === undefined ? null : left)
+        this.right = (right === undefined ? null : right)
+    }
+}
+
+
+function sortedArrayToBST(nums: number[]): TreeNode | null {
+    if(nums.length === 0) return null;
+    let root = new TreeNode();
+    fillTree(0, nums.length, nums, root);
+    return root;
+};
+
+function fillTree(a: number, b: number, nums: number[], node: TreeNode) {
+    if(b-a <= 1) {
+        node.val = nums[a];
+        return;
+    }
+    let middle = Math.floor((a+b-1)/2);
+    node.val = nums[middle];
+    if(a !== middle){
+        node.left = new TreeNode();
+        fillTree(a, middle, nums, node.left);
+    }
+    if(b !== middle){
+        node.right = new TreeNode();
+        fillTree(middle+1, b, nums, node.right);
+    }
+}
